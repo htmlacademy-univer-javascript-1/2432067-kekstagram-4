@@ -1,3 +1,4 @@
+import {randomInteger} from './util.js';
 const DESCRIPTIONS = [
   'Классная фотка',
   'Я здесь был',
@@ -36,7 +37,7 @@ const Avatar = {
   MIN: 1,
   MAX: 6
 };
-const randomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 
 const addComment = (index) => ({
   id: index,
