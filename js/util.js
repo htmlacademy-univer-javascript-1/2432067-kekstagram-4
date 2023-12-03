@@ -14,3 +14,4 @@ const closeOnEscKeyDown = (evt, cb) => {
 };
 
 export {randomInteger, isEscapeKay, closeOnEscKeyDown};
+
