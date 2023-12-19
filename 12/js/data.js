@@ -1,4 +1,5 @@
-import {getRandomInteger, createRandomId} from './util.js';
+import {getRandomInteger} from './util.js';
+
 const DESCRIPTIONS = [
   'Классная фотка',
   'Я здесь был',
@@ -39,28 +40,23 @@ const Avatar = {
   MAX: 6
 };
 
-const generateCommentId = createRandomId(1, COUNT_COMMENTS);
-
-const addComment = () => ({
-  id: generateCommentId(),
+const addComment = (index) => ({
+  id: index,
   avatar: `img/avatar-${getRandomInteger(Avatar.MIN, Avatar.MAX)}.svg`,
   message: MESSAGES[getRandomInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomInteger(0, NAMES.length - 1)]
 });
 
-const addComments = () => Array.from({length: getRandomInteger(0, COUNT_COMMENTS)}, addComment);
+const addComments = () => Array.from({length: getRandomInteger(0, COUNT_COMMENTS)}, (_, index) => addComment(index + 1));
 
-const generatePhotoId = createRandomId(1, COUNT_PHOTOS);
-const generatePhotoUrl = createRandomId(1, COUNT_PHOTOS);
-
-const addPhoto = () => ({
-  id: generatePhotoId(),
-  url: `photos/${generatePhotoUrl()}.jpg`,
+const addPhoto = (index) => ({
+  id: index,
+  url: `photos/${index + 1}.jpg`,
   description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
   likes: getRandomInteger(Likes.MIN, Likes.MAX),
   comments: addComments()
 });
 
-const photos = Array.from({length: COUNT_PHOTOS}, addPhoto);
+const photos = Array.from({length: COUNT_PHOTOS}, (__, index) => addPhoto(index));
 
 export {photos};
