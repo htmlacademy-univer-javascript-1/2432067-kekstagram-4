@@ -5,9 +5,9 @@ const MAX_BLUR_VALUE = 3;
 const MAX_BRIGHTNESS = 3;
 
 const Slider = {
-  MIN: 0,
+  MIN: 10,
   MAX: 100,
-  STEP: 1,
+  STEP: 10,
 };
 
 const uploadForm = document.querySelector('.img-upload__form');
