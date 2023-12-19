@@ -63,6 +63,7 @@ const addPhotos = () => {
   });
   return photosArray.map((__, index) => addPhoto(index));
 };
+
 const photos = addPhotos();
 
 export {photos};

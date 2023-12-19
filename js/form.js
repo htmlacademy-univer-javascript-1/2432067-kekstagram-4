@@ -6,7 +6,7 @@ const Zoom = {
   STEP: 25,
 };
 
-const body = document.body;
+const body = document.querySelector('body');
 const formUpload = body.querySelector('.img-upload__form');
 const overlay = body.querySelector('.img-upload__overlay');
 const fileUpload = body.querySelector('#upload-file');
