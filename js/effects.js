@@ -20,8 +20,6 @@ const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 sliderElement.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = document.querySelector('.effects__radio').value;
 
-sliderUpload.classList.add('visually-hidden');
-
 const filters = {
   none: () => {
     sliderUpload.classList.add('visually-hidden');
