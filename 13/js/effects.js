@@ -83,6 +83,7 @@ noUiSlider.create(sliderElement, {
     min: Slider.MIN,
     max: Slider.MIN,
   },
+
   start: Slider.MAX,
   step: Slider.STEP,
   connect: 'lower',
