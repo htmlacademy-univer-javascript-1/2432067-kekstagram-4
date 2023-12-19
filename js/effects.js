@@ -23,7 +23,7 @@ let currentEffect = '';
 
 sliderUpload.classList.add('visually-hidden');
 
-const effects = {
+const filters = {
   none: () => {
     sliderUpload.classList.add('visually-hidden');
     return 'none';
@@ -72,7 +72,7 @@ const onEffectsListClick = (evt) => {
 
     currentEffect = target.classList[1];
     image.classList.add(currentEffect);
-    image.style.filter = effects[currentEffect.replace('effect__preview--', '')]();
+    image.style.filter = filters[currentEffect.replace('effect__preview--', '')]();
   }
 };
 
@@ -92,7 +92,7 @@ noUiSlider.create(sliderElement, {
 sliderElement.noUiSlider.on('change', () => {
   effectsLevelValue.value = sliderElement.noUiSlider.get();
 
-  image.style.filter = effects[currentEffect.replace('effects__preview--', '')]();
+  image.style.filter = filters[currentEffect.replace('effects__preview--', '')]();
 });
 
-export {image, effects};
+export {image, filters};
