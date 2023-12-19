@@ -57,6 +57,12 @@ const addPhoto = (index) => ({
   comments: addComments()
 });
 
-const photos = Array.from({length: COUNT_PHOTOS}, (__, index) => addPhoto(index));
+const addPhotos = () => {
+  const photosArray = Array.from({
+    length: COUNT_PHOTOS
+  });
+  return photosArray.map((__, index) => addPhoto(index));
+};
+const photos = addPhotos();
 
 export {photos};
