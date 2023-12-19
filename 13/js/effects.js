@@ -10,11 +10,12 @@ const Slider = {
   STEP: 1,
 };
 
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderUpload = document.querySelector('.img-upload__effect-level');
-const currentSlider = document.querySelector('.effect-level__slider');
-const filterRadios = document.querySelectorAll('.effects__item');
-const imagePreview = document.querySelector('.img-upload__preview img');
+const uploadForm = document.querySelector('.img-upload__form');
+const sliderElement = uploadForm.querySelector('.effect-level__slider');
+const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
+const currentSlider = uploadForm.querySelector('.effect-level__slider');
+const filterRadios = uploadForm.querySelectorAll('.effects__item');
+const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
 sliderElement.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = document.querySelector('.effects__radio').value;
