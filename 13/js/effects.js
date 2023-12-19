@@ -1,8 +1,4 @@
 const DEFAULT_EFFECT_LEVEL = 100;
-const RADIX = 10;
-const EFFECTS_STEP = 0.01;
-const MAX_BLUR_VALUE = 3;
-const MAX_BRIGHTNESS = 3;
 
 const Slider = {
   MIN: 10,
@@ -10,58 +6,83 @@ const Slider = {
   STEP: 10,
 };
 
-const uploadForm = document.querySelector('.img-upload__form');
-const sliderElement = uploadForm.querySelector('.effect-level__slider');
-const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
-const currentSlider = uploadForm.querySelector('.effect-level__slider');
-const filterRadios = uploadForm.querySelectorAll('.effects__item');
-const imagePreview = uploadForm.querySelector('.img-upload__preview img');
+const sliderElement = document.querySelector('.effect-level__slider');
+const sliderUpload = document.querySelector('.img-upload__effect-level');
+const currentSlider = document.querySelector('.effect-level__value');
+const filterRadios = document.querySelectorAll('.effects__item');
+const picture = document.querySelector('.img-upload__preview img');
 
-sliderElement.value = DEFAULT_EFFECT_LEVEL;
-let currentEffect = document.querySelector('.effects__radio').value;
+let currentRadio = document.querySelector('.effects__radio').value;
 
-const filters = {
-  none: () => {
+currentSlider.value = DEFAULT_EFFECT_LEVEL;
+
+const Effects = {
+  none: 0,
+  chrome: {
+    filter: 'grayscale',
+    range: {min: 0, max: 1.0},
+    step: 0.1,
+    measurementUnit: ''},
+  sepia: {
+    filter: 'sepia',
+    range: {min: 0, max: 1.0},
+    step: 0.1,
+    measurementUnit: ''},
+  marvin: {
+    filter: 'invert',
+    range: {min: 0, max: 100},
+    step: 1,
+    measurementUnit: '%'},
+  phobos: {
+    filter: 'blur',
+    range: {min: 0, max: 3.0},
+    step: 0.1,
+    measurementUnit: 'px'},
+  heat: {
+    filter: 'brightness',
+    range: {min: 1, max: 3.0},
+    step: 0.1,
+    measurementUnit: ''}
+};
+
+const applySliderValue = () => {
+  if (currentRadio !== 'none') {
+    const effect = Effects[currentRadio];
+    picture.style.filter = `${effect.filter}(${sliderElement.noUiSlider.get()}${effect.measurementUnit})`;
+    currentSlider.value = `${parseFloat(sliderElement.noUiSlider.get())}${effect.measurementUnit}`;
+  } else {
+    picture.style.filter = '';
+  }
+};
+
+
+const changeSlider = (newEffect) => {
+  const effect = Effects[newEffect];
+  if(effect !== 0){
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: effect.range.min,
+        max: effect.range.max,
+      },
+      start: effect.range.max,
+      step: effect.step
+    });
+    sliderUpload.classList.remove('visually-hidden');
+    applySliderValue();
+  }
+  else{
     sliderUpload.classList.add('visually-hidden');
-    return 'none';
-  },
-
-  sepia: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `sepia(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
-
-  chrome: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
-
-  marvin: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `invert(${Math.floor(currentSlider.value)}%)`;
-  },
-
-  phobos: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `blur(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP * MAX_BLUR_VALUE}px)`;
-  },
-
-  heat: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `brightness(${(parseInt(currentSlider.value, RADIX) * EFFECTS_STEP) * MAX_BRIGHTNESS})`;
-  },
+    picture.style.filter = '';
+  }
 };
 
 const onNoUiSliderChange = () => {
-  currentSlider.value = sliderElement.noUiSlider.get();
-  imagePreview.style.filter = filters[currentEffect]();
+  applySliderValue();
 };
 
 const onRadioChange = (evt) =>{
-  currentEffect = evt.currentTarget.querySelector('.effects__radio').value;
-  imagePreview.style.filter = filters[currentEffect]();
-  sliderElement.noUiSlider.set(Slider.MAX);
-  currentSlider.value = Slider.MAX;
+  currentRadio = evt.currentTarget.querySelector('.effects__radio').value;
+  changeSlider(currentRadio);
 };
 
 const resetFilters = () =>{
@@ -69,7 +90,7 @@ const resetFilters = () =>{
     filter.removeEventListener('change', onRadioChange);
   });
 
-  imagePreview.style.filter = 'none';
+  picture.style.filter = 'none';
   sliderElement.noUiSlider.off('change', onNoUiSliderChange);
 };
 
@@ -79,18 +100,16 @@ const initRadios = () =>{
   filterRadios.forEach((filter) => {
     filter.addEventListener('change', onRadioChange);
   });
-  imagePreview.style.filter = 'none';
+  picture.style.filter = 'none';
 };
 
 noUiSlider.create(sliderElement, {
   range: {
     min: Slider.MIN,
-    max: Slider.MIN,
+    max: Slider.MAX
   },
-
   start: Slider.MAX,
   step: Slider.STEP,
   connect: 'lower',
 });
-
 export {initRadios,  resetFilters};
