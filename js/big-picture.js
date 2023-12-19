@@ -92,7 +92,7 @@ const onCloseBigPictureClick = () => {
 
 
 const showBigPicture = (picture) => {
-  const {url, likes, comments, description } = picture;
+  const {url, description, comments, likes} = picture;
 
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');

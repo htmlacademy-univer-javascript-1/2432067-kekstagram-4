@@ -13,8 +13,8 @@ const renderPhoto = (picture) => {
   pictureElement.querySelector('.picture__likes').textContent = likes;
 
 
-  const onPictureElementClick = (event) => {
-    event.preventDefault();
+  const onPictureElementClick = (evt) => {
+    evt.preventDefault();
 
     showBigPicture(picture);
   };
