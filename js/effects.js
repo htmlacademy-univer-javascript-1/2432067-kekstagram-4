@@ -26,14 +26,14 @@ const filters = {
     return 'none';
   },
 
-  chrome: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
-
   sepia: () => {
     sliderUpload.classList.remove('visually-hidden');
     return `sepia(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
+  },
+
+  chrome: () => {
+    sliderUpload.classList.remove('visually-hidden');
+    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
   },
 
   marvin: () => {
@@ -43,12 +43,12 @@ const filters = {
 
   phobos: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `blur(${(parseInt(currentSlider.value, RADIX) * MAX_BLUR_VALUE) * EFFECTS_STEP}px)`;
+    return `blur(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP * MAX_BLUR_VALUE}px)`;
   },
 
   heat: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `brightness(${(parseInt(currentSlider.value, RADIX) * MAX_BRIGHTNESS) * EFFECTS_STEP})`;
+    return `brightness(${(parseInt(currentSlider.value, RADIX) * EFFECTS_STEP) * MAX_BRIGHTNESS})`;
   },
 };
 
