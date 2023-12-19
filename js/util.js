@@ -11,14 +11,12 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
-const isEscapeKay = (evt) => evt.key === Keys.ESCAPE || evt.key === Keys.ESC;
+const isEscapeKey = (evt) => evt.key === Keys.ESCAPE || evt.key === Keys.ESC;
 
 const closeOnEscKeyDown = (evt, cb) => {
-  if (isEscapeKay(evt)) {
+  if (isEscapeKey(evt)) {
     cb();
   }
 };
 
-export {getRandomInteger};
-export{closeOnEscKeyDown};
-export{isEscapeKay};
+export {getRandomInteger, isEscapeKey, closeOnEscKeyDown};
