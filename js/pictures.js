@@ -11,6 +11,7 @@ const renderPhoto = (picture) => {
   pictureElement.querySelector('.picture__img').alt = description;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
+
   const onPictureElementClick = (event) => {
     event.preventDefault();
 
@@ -18,6 +19,7 @@ const renderPhoto = (picture) => {
   };
 
   pictureElement.addElement('click', onPictureElementClick);
+
   return pictureElement;
 };
 
