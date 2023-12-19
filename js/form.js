@@ -3,7 +3,6 @@ import { isEscapeKey } from './util.js';
 const Zoom = {
   MIN: 25,
   MAX: 100,
-  STEP: 25,
 };
 
 const body = document.querySelector('body');
@@ -53,7 +52,7 @@ formUploadClose.addEventListener('click', () => {
 });
 
 const changeZoom = (factor = 1) => {
-  let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
+  let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
