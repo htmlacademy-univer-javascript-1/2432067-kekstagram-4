@@ -1,22 +1,23 @@
 import { isEscapeKey } from './util.js';
 import {inputHashtag} from './hashtag-pristine.js';
-import {image, filters} from './effects.js';
+import {initRadios, resetFilters } from './effects.js';
 
 const Zoom = {
   MIN: 25,
   MAX: 100,
 };
 
-const body = document.querySelector('body');
+const body = document.body;
 const formUpload = body.querySelector('.img-upload__form');
 const overlay = body.querySelector('.img-upload__overlay');
+const imagePreview = body.querySelector('.img-upload__preview img');
 const fileUpload = body.querySelector('#upload-file');
 const formUploadClose = body.querySelector('#upload-cancel');
 const minusButton = body.querySelector('.scale__control--smaller');
 const plusButton = body.querySelector('.scale__control--bigger');
 const scaleControlValue = body.querySelector('.scale__control--value');
-const imagePreview = body.querySelector('.img--upload__preview');
 const effects = document.querySelectorAll('.effects__preview');
+const mainPicture = document.querySelector('.img-upload__preview img');
 
 const changeZoom = (factor = 1) => {
   let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
@@ -60,13 +61,14 @@ const closeForm = () => {
 
   formUploadClose.removeEventListener('click', onCloseFormClick);
   document.removeEventListener('keydown', onCloseFormEscKeyDown);
+
   formUpload.reset();
   inputHashtag.reset();
 
   scaleControlValue.value = '100%';
   imagePreview.style.transform = 'scale(100%)';
 
-  filters();
+  resetFilters();
 };
 
 function onCloseFormClick (evt) {
@@ -88,7 +90,7 @@ const changeImages = () => {
   const file = fileUpload.files[0];
   const fileUrl = URL.createObjectURL(file);
 
-  imagePreview.src = fileUrl;
+  mainPicture.src = fileUrl;
 
   effects.forEach((effect) => {
     effect.style.backgroundImage = `url('${fileUrl}')`;
@@ -102,7 +104,7 @@ function onFileUploadChange () {
   initForm();
   changeImages();
   initButtons();
-  image();
+  initRadios();
 }
 
 export {initForm};
