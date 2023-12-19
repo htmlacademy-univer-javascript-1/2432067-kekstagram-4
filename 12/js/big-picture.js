@@ -42,7 +42,7 @@ const renderComments = () => {
 
   const commentsSelected = currentComments.slice(0, shownCommentsCount);
 
-  if (currentComments.length <= COMMENTS_COUNT || shownCommentsCount >= currentComments.length) {
+  if (currentComments.length < COMMENTS_COUNT || shownCommentsCount > currentComments.length) {
     loadComments.classList.add('hidden');
   } else {
     loadComments.classList.remove('hidden');
