@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import {isEscapeKey} from './util.js';
 
 const Zoom = {
   MIN: 25,
