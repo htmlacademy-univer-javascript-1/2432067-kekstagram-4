@@ -19,15 +19,25 @@ const scaleControlValue = body.querySelector('.scale__control--value');
 const effects = document.querySelectorAll('.effects__preview');
 const mainPicture = document.querySelector('.img-upload__preview img');
 
+const initForm = () => {
+  formUploadClose.addEventListener('click', onCloseFormClick);
+  document.addEventListener('keydown', onCloseFormEscKeyDown);
+
+  fileUpload.addEventListener('change', onFileUploadChange);
+  scaleControlValue.value = '100%';
+};
+
 const changeZoom = (factor = 1) => {
   let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
+    return;
   }
 
   if (size > Zoom.MAX) {
     size = Zoom.MAX;
+    return;
   }
 
   scaleControlValue.value = `${size}%`;
@@ -45,14 +55,6 @@ const initButtons = () => {
 
   minusButton.addEventListener('click', onMinusButtonClick);
   plusButton.addEventListener('click', onPlusButtonClick);
-};
-
-const initForm = () => {
-  formUploadClose.addEventListener('click', onCloseFormClick);
-  document.addEventListener('keydown', onCloseFormEscKeyDown);
-
-  fileUpload.addEventListener('change', onFileUploadChange);
-  scaleControlValue.value = '100%';
 };
 
 const closeForm = () => {
@@ -76,7 +78,7 @@ function onCloseFormClick (evt) {
   closeForm();
 }
 
-function onCloseFormEscKeyDown  (evt) {
+function onCloseFormEscKeyDown (evt) {
   if (isEscapeKey(evt) &&
       !evt.target.classList.contains('text__hashtags') &&
       !evt.target.classList.contains('text__description')
