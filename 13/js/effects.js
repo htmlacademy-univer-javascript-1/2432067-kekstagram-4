@@ -10,22 +10,25 @@ const Slider = {
   STEP: 1,
 };
 
-const sliderElement = document.querySelector('.effect-level__slider');
-const sliderUpload = document.querySelector('.img-upload__effect-level');
-const currentSlider = document.querySelector('.effect-level__slider');
-const filterRadios = document.querySelectorAll('.effects__item');
-const picture = document.querySelector('.img-upload__preview img');
+const uploadForm = document.querySelector('.img-upload__form');
+const sliderElement = uploadForm.querySelector('.effect-level__slider');
+const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
+const currentSlider = uploadForm.querySelector('.effect-level__slider');
+const filterRadios = uploadForm.querySelectorAll('.effects__item');
+const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
-let currentRadio = document.querySelector('.effects__radio').value;
+sliderElement.value = DEFAULT_EFFECT_LEVEL;
+let currentEffect = document.querySelector('.effects__radio').value;
 
-
-currentSlider.value = DEFAULT_EFFECT_LEVEL;
-
-
-const FILTERS = {
+const filters = {
   none: () => {
     sliderUpload.classList.add('visually-hidden');
     return 'none';
+  },
+
+  chrome: () => {
+    sliderUpload.classList.remove('visually-hidden');
+    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
   },
 
   sepia: () => {
@@ -33,33 +36,30 @@ const FILTERS = {
     return `sepia(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
   },
 
-  chrome: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
   marvin: () => {
     sliderUpload.classList.remove('visually-hidden');
     return `invert(${Math.floor(currentSlider.value)}%)`;
   },
+
   phobos: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `blur(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP * MAX_BLUR_VALUE}px)`;
+    return `blur(${(parseInt(currentSlider.value, RADIX) * MAX_BLUR_VALUE) * EFFECTS_STEP}px)`;
   },
+
   heat: () => {
     sliderUpload.classList.remove('visually-hidden');
-    return `brightness(${(parseInt(currentSlider.value, RADIX) * EFFECTS_STEP) * MAX_BRIGHTNESS})`;
+    return `brightness(${(parseInt(currentSlider.value, RADIX) * MAX_BRIGHTNESS) * EFFECTS_STEP})`;
   },
 };
-
 
 const onNoUiSliderChange = () => {
   currentSlider.value = sliderElement.noUiSlider.get();
-  picture.style.filter = FILTERS[currentRadio]();
+  imagePreview.style.filter = filters[currentEffect]();
 };
 
 const onRadioChange = (evt) =>{
-  currentRadio = evt.currentTarget.querySelector('.effects__radio').value;
-  picture.style.filter = FILTERS[currentRadio]();
+  currentEffect = evt.currentTarget.querySelector('.effects__radio').value;
+  imagePreview.style.filter = filters[currentEffect]();
   sliderElement.noUiSlider.set(Slider.MAX);
   currentSlider.value = Slider.MAX;
 };
@@ -69,7 +69,7 @@ const resetFilters = () =>{
     filter.removeEventListener('change', onRadioChange);
   });
 
-  picture.style.filter = 'none';
+  imagePreview.style.filter = 'none';
   sliderElement.noUiSlider.off('change', onNoUiSliderChange);
 };
 
@@ -79,13 +79,13 @@ const initRadios = () =>{
   filterRadios.forEach((filter) => {
     filter.addEventListener('change', onRadioChange);
   });
-  picture.style.filter = 'none';
+  imagePreview.style.filter = 'none';
 };
 
 noUiSlider.create(sliderElement, {
   range: {
     min: Slider.MIN,
-    max: Slider.MAX
+    max: Slider.MIN,
   },
 
   start: Slider.MAX,
