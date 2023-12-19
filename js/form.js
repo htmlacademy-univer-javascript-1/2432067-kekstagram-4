@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-import { inputHashtag } from './hashtags-pristine.js';
 import { initRadios, resetFilters } from './effects.js';
 
 const Zoom = {
@@ -16,46 +15,7 @@ const formUploadClose = body.querySelector('#upload-cancel');
 const minusButton = body.querySelector('.scale__control--smaller');
 const plusButton = body.querySelector('.scale__control--bigger');
 const scaleControlValue = body.querySelector('.scale__control--value');
-const effects = document.querySelectorAll('.effects__preview');
 const mainPicture = document.querySelector('.img-upload__preview img');
-
-const changeZoom = (factor = 1) => {
-  let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
-
-  if (size < Zoom.MIN) {
-    size = Zoom.MIN;
-    return;
-  }
-
-  if (size > Zoom.MAX) {
-    size = Zoom.MAX;
-    return;
-  }
-
-  scaleControlValue.value = `${size}%`;
-  imagePreview.style.transform = `scale(${size / 100})`;
-};
-
-const initButtons = () => {
-  const onMinusButtonClick = () => {
-    changeZoom(-1);
-  };
-
-  const onPlusButtonClick = () => {
-    changeZoom();
-  };
-
-  minusButton.addEventListener('click', onMinusButtonClick);
-  plusButton.addEventListener('click', onPlusButtonClick);
-};
-
-const initForm = () => {
-  formUploadClose.addEventListener('click', onCloseFormClick);
-  document.addEventListener('keydown', onCloseFormEscKeyDown);
-
-  fileUpload.addEventListener('change', onFileUploadChange);
-  scaleControlValue.value = '100%';
-};
 
 const closeForm = () => {
   overlay.classList.add('hidden');
@@ -65,11 +25,6 @@ const closeForm = () => {
   document.removeEventListener('keydown', onCloseFormEscKeyDown);
 
   formUpload.reset();
-  inputHashtag.reset();
-
-  scaleControlValue.value = '100%';
-  imagePreview.style.transform = 'scale(100%)';
-
   resetFilters();
 };
 
@@ -80,9 +35,9 @@ function onCloseFormClick (evt) {
 
 function onCloseFormEscKeyDown (evt) {
   if (isEscapeKey(evt) &&
-      !evt.target.classList.contains('text__hashtags') &&
-      !evt.target.classList.contains('text__description')
-  ) {
+    !evt.target.classList.contains('text__hashtags') &&
+    !evt.target.classList.contains('text__description'))
+  {
     evt.preventDefault();
     closeForm();
   }
@@ -93,20 +48,51 @@ const changeImages = () => {
   const fileUrl = URL.createObjectURL(file);
 
   mainPicture.src = fileUrl;
-
-  effects.forEach((effect) => {
-    effect.style.backgroundImage = `url('${fileUrl}')`;
-  });
 };
 
-function onFileUploadChange () {
+const onFileUploadChange = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  initForm();
   changeImages();
-  initButtons();
-  initRadios();
-}
 
-export {initForm};
+  formUploadClose.addEventListener('click', onCloseFormClick);
+
+  document.addEventListener('keydown', onCloseFormEscKeyDown);
+
+  initRadios();
+};
+
+fileUpload.addEventListener('change', onFileUploadChange);
+
+formUploadClose.addEventListener('click', () => {
+  closeForm();
+});
+
+const changeZoom = (factor = 1) => {
+  let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
+
+  if (size < Zoom.MIN) {
+    size = Zoom.MIN;
+  }
+
+  if (size > Zoom.MAX) {
+    size = Zoom.MAX;
+  }
+
+  scaleControlValue.value = `${size}%`;
+  imagePreview.style.transform = `scale(${size / 100})`;
+};
+
+const onMinusButtonClick = () => {
+  changeZoom(-1);
+};
+
+const onPlusButtonClick = () => {
+  changeZoom();
+};
+
+minusButton.addEventListener('click', onMinusButtonClick);
+plusButton.addEventListener('click', onPlusButtonClick);
+
+export {closeForm, formUpload};
