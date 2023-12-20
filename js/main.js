@@ -5,9 +5,9 @@ import './hashtags-pristine.js';
 import './effects.js';
 import { loadData } from './fetch.js';
 import { showAlert } from './util.js';
-import './messages.js';
 import './filters.js';
-import './own-photos.js';
+import './messages.js';
+import './add-photos.js';
 
 let photos = [];
 
