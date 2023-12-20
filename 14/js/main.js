@@ -26,3 +26,5 @@ const onError = () => {
 };
 
 loadData(onSuccess, onError);
+
+export {photos};
