@@ -11,7 +11,7 @@ const closePopup = () => {
   popup.remove();
 };
 
-const onEscKeydown = (evt) => {
+const onEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     closePopup();
   }
@@ -21,14 +21,14 @@ const onPopupClick = (evt) => {
   if (!evt.target.classList.contains('success__inner') && !evt.target.classList.contains('error__inner')) {
     evt.preventDefault();
     closePopup();
-    document.removeEventListener('keydown', onEscKeydown);
+    document.removeEventListener('keydown', onEscKeyDown);
   }
 };
 
 const showMessage = (message) => {
   message.addEventListener('click', onPopupClick);
   document.body.appendChild(message);
-  document.addEventListener('keydown', onEscKeydown, {once: true});
+  document.addEventListener('keydown', onEscKeyDown, {once: true});
 };
 
 const showErrorMessage = () => {

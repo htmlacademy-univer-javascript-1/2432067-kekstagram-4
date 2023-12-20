@@ -1,4 +1,5 @@
 import { renderPhotos } from './pictures.js';
+import './pictures.js';
 import './form.js';
 import './hashtags-pristine.js';
 import './effects.js';
