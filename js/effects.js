@@ -1,6 +1,10 @@
 const DEFAULT_EFFECT_LEVEL = 100;
-const EFFECTS_STEP = 0.01;
-const MAX_BLUR_VALUE = 3;
+const MIN_VALUE_EFFECT = 0;
+const EFFECTS_STEP = 0.1;
+const MAX_GRAYSCALE = 1;
+const MAX_SEPIA = 1;
+const MAX_BLUR = 3;
+const MIN_BRIGHTNESS = 1;
 const MAX_BRIGHTNESS = 3;
 
 const Slider = {
@@ -24,27 +28,27 @@ const effects = {
   none: 0,
   chrome: {
     filter: 'grayscale',
-    range: {min: 0, max: 1.0},
+    range: {min: MIN_VALUE_EFFECT, max: MAX_GRAYSCALE},
     step: EFFECTS_STEP,
     measurementUnit: ''},
   sepia: {
     filter: 'sepia',
-    range: {min: 0, max: 1.0},
+    range: {min: MIN_VALUE_EFFECT, max: MAX_SEPIA},
     step: EFFECTS_STEP,
     measurementUnit: ''},
   marvin: {
     filter: 'invert',
-    range: {min: 0, max: DEFAULT_EFFECT_LEVEL},
+    range: {min: MIN_VALUE_EFFECT, max: DEFAULT_EFFECT_LEVEL},
     step: 1,
     measurementUnit: '%'},
   phobos: {
     filter: 'blur',
-    range: {min: 0, max: MAX_BLUR_VALUE},
+    range: {min: MIN_VALUE_EFFECT, max: MAX_BLUR},
     step: EFFECTS_STEP,
     measurementUnit: 'px'},
   heat: {
     filter: 'brightness',
-    range: {min: 1, max: MAX_BRIGHTNESS},
+    range: {min: MIN_BRIGHTNESS, max: MAX_BRIGHTNESS},
     step: EFFECTS_STEP,
     measurementUnit: ''}
 };
@@ -58,7 +62,6 @@ const applySliderValue = () => {
     imagePreview.style.filter = '';
   }
 };
-
 
 const changeSlider = (newEffect) => {
   const effect = effects[newEffect];
