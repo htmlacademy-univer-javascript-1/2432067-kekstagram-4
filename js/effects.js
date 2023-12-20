@@ -1,7 +1,10 @@
 const DEFAULT_EFFECT_LEVEL = 100;
-const RADIX = 10;
-const EFFECTS_STEP = 0.01;
-const MAX_BLUR_VALUE = 3;
+const MIN_VALUE_EFFECT = 0;
+const EFFECTS_STEP = 0.1;
+const MAX_GRAYSCALE = 1;
+const MAX_SEPIA = 1;
+const MAX_BLUR = 3;
+const MIN_BRIGHTNESS = 1;
 const MAX_BRIGHTNESS = 3;
 
 const Slider = {
@@ -13,55 +16,80 @@ const Slider = {
 const uploadForm = document.querySelector('.img-upload__form');
 const sliderElement = uploadForm.querySelector('.effect-level__slider');
 const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
-const currentSlider = uploadForm.querySelector('.effect-level__slider');
+const currentSlider = uploadForm.querySelector('.effect-level__value');
 const filterRadios = uploadForm.querySelectorAll('.effects__item');
 const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
-sliderElement.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = document.querySelector('.effects__radio').value;
 
-const filters = {
-  none: () => {
+currentSlider.value = DEFAULT_EFFECT_LEVEL;
+
+const effects = {
+  none: 0,
+  chrome: {
+    filter: 'grayscale',
+    range: {min: MIN_VALUE_EFFECT, max: MAX_GRAYSCALE},
+    step: EFFECTS_STEP,
+    measurementUnit: ''},
+  sepia: {
+    filter: 'sepia',
+    range: {min: MIN_VALUE_EFFECT, max: MAX_SEPIA},
+    step: EFFECTS_STEP,
+    measurementUnit: ''},
+  marvin: {
+    filter: 'invert',
+    range: {min: MIN_VALUE_EFFECT, max: DEFAULT_EFFECT_LEVEL},
+    step: 1,
+    measurementUnit: '%'},
+  phobos: {
+    filter: 'blur',
+    range: {min: MIN_VALUE_EFFECT, max: MAX_BLUR},
+    step: EFFECTS_STEP,
+    measurementUnit: 'px'},
+  heat: {
+    filter: 'brightness',
+    range: {min: MIN_BRIGHTNESS, max: MAX_BRIGHTNESS},
+    step: EFFECTS_STEP,
+    measurementUnit: ''}
+};
+
+const applySliderValue = () => {
+  if (currentEffect !== 'none') {
+    const effect = effects[currentEffect];
+    imagePreview.style.filter = `${effect.filter}(${sliderElement.noUiSlider.get()}${effect.measurementUnit})`;
+    currentSlider.value = `${parseFloat(sliderElement.noUiSlider.get())}${effect.measurementUnit}`;
+  } else {
+    imagePreview.style.filter = '';
+  }
+};
+
+const changeSlider = (newEffect) => {
+  const effect = effects[newEffect];
+  if(effect !== 0){
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: effect.range.min,
+        max: effect.range.max,
+      },
+      start: effect.range.max,
+      step: effect.step
+    });
+    sliderUpload.classList.remove('visually-hidden');
+    applySliderValue();
+  }
+  else{
     sliderUpload.classList.add('visually-hidden');
-    return 'none';
-  },
-
-  sepia: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `sepia(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
-
-  chrome: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP})`;
-  },
-
-  marvin: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `invert(${Math.floor(currentSlider.value)}%)`;
-  },
-
-  phobos: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `blur(${parseInt(currentSlider.value, RADIX) * EFFECTS_STEP * MAX_BLUR_VALUE}px)`;
-  },
-
-  heat: () => {
-    sliderUpload.classList.remove('visually-hidden');
-    return `brightness(${(parseInt(currentSlider.value, RADIX) * EFFECTS_STEP) * MAX_BRIGHTNESS})`;
-  },
+    imagePreview.style.filter = '';
+  }
 };
 
 const onNoUiSliderChange = () => {
-  currentSlider.value = sliderElement.noUiSlider.get();
-  imagePreview.style.filter = filters[currentEffect]();
+  applySliderValue();
 };
 
 const onRadioChange = (evt) =>{
   currentEffect = evt.currentTarget.querySelector('.effects__radio').value;
-  imagePreview.style.filter = filters[currentEffect]();
-  sliderElement.noUiSlider.set(Slider.MAX);
-  currentSlider.value = Slider.MAX;
+  changeSlider(currentEffect);
 };
 
 const resetFilters = () =>{
@@ -85,7 +113,7 @@ const initRadios = () =>{
 noUiSlider.create(sliderElement, {
   range: {
     min: Slider.MIN,
-    max: Slider.MIN,
+    max: Slider.MAX
   },
 
   start: Slider.MAX,
