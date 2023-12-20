@@ -2,10 +2,10 @@ import { renderPhotos } from './pictures.js';
 import './form.js';
 import './hashtags-pristine.js';
 import './effects.js';
-import './messages.js';
-import './filters.js';
 import { loadData } from './fetch.js';
 import { showAlert } from './util.js';
+import './messages.js';
+import './filters.js';
 
 let photos = [];
 
