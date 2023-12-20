@@ -1,5 +1,5 @@
 import { debounce, shuffleArray } from './util.js';
-import { renderPhotos, removePhotos } from './pictures.js';
+import { renderPhotos, removePictures } from './pictures.js';
 import { photos } from './main.js';
 
 const COUNT_OF_FILTER = 10;
@@ -17,7 +17,8 @@ const isButton = (evt) => evt.target.tagName === 'BUTTON';
 
 const onImgFiltersFormClick = debounce((evt) => {
   if (isButton(evt)) {
-    removePhotos();
+    removePictures();
+
     renderPhotos(availableFilters[evt.target.id]);
   }
 });
