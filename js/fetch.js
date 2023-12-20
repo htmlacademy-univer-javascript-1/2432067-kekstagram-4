@@ -1,4 +1,4 @@
-/*const Urls = {
+const Urls = {
   GET: 'https://29.javascript.pages.academy/kekstagram/data',
   POST: 'https://29.javascript.pages.academy/kekstagram'
 };
@@ -24,4 +24,4 @@ const loadData = (onSuccess, onError, method = 'GET') => sendRequest(onSuccess, 
 
 const uploadData = (onSuccess, onError, method = 'POST', body) => sendRequest(onSuccess, onError, method, body);
 
-export {loadData, uploadData};*/
+export {loadData, uploadData};
