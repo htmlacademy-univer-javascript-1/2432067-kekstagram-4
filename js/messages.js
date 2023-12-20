@@ -1,4 +1,4 @@
-import { closeForm } from './form.js';
+/*import { closeForm } from './form.js';
 import { isEscapeKey } from './util.js';
 import { uploadData } from './fetch.js';
 
@@ -55,4 +55,4 @@ const onFormUploadSubmit = (evt) => {
   uploadData(onSuccess, onError, 'POST', new FormData(evt.target));
 };
 
-formUpload.addEventListener('submit', onFormUploadSubmit);
+formUpload.addEventListener('submit', onFormUploadSubmit);*/

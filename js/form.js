@@ -109,4 +109,4 @@ function onFileUploadChange () {
   initRadios();
 }
 
-export {initForm};
+export { initForm };
