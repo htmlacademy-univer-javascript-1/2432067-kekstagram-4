@@ -6,6 +6,7 @@ import { loadData } from './fetch.js';
 import { showAlert } from './util.js';
 import './messages.js';
 import './filters.js';
+import './own-photos.js';
 
 let photos = [];
 
