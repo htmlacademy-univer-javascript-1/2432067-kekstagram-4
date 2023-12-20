@@ -1,7 +1,7 @@
 import { showBigPicture } from './big-picture.js';
 
-const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const fragment = document.createDocumentFragment();
 
 const renderPhoto = (picture) => {
   const {url, description, comments, likes} = picture;
@@ -12,26 +12,28 @@ const renderPhoto = (picture) => {
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
 
-
   const onPictureElementClick = (evt) => {
     evt.preventDefault();
-
     showBigPicture(picture);
   };
 
   pictureElement.addEventListener('click', onPictureElementClick);
 
-  return pictureElement;
+  fragment.append(pictureElement);
 };
 
-const fragment = document.createDocumentFragment();
-
 const renderPhotos = (photos) => {
+  const pictures = document.querySelector('.pictures');
+
   photos.forEach((photo) => {
-    fragment.appendChild(renderPhoto(photo));
+    renderPhoto(photo);
   });
 
   pictures.appendChild(fragment);
 };
 
-export {renderPhotos};
+const removePhotos = () => {
+  document.querySelectorAll('.picture').forEach((photo) => photo.remove());
+};
+
+export { renderPhotos, removePhotos };
