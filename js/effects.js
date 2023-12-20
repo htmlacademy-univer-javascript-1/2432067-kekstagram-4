@@ -17,8 +17,9 @@ const currentSlider = uploadForm.querySelector('.effect-level__value');
 const filterRadios = uploadForm.querySelectorAll('.effects__item');
 const imagePreview = uploadForm.querySelector('.img-upload__preview img');
 
-sliderElement.value = DEFAULT_EFFECT_LEVEL;
 let currentEffect = document.querySelector('.effects__radio').value;
+
+currentSlider.value = DEFAULT_EFFECT_LEVEL;
 
 const filters = {
   none: () => {
