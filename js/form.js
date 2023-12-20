@@ -4,6 +4,7 @@ import { initRadios, resetFilters } from './effects.js';
 const Zoom = {
   MIN: 25,
   MAX: 100,
+  STEP: 25,
 };
 
 const body = document.body;
@@ -70,7 +71,7 @@ formUploadClose.addEventListener('click', () => {
 });
 
 const changeZoom = (factor = 1) => {
-  let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
+  let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
