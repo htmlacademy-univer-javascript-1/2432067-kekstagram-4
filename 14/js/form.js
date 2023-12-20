@@ -74,12 +74,10 @@ const changeZoom = (factor = 1) => {
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
-    return;
   }
 
   if (size > Zoom.MAX) {
     size = Zoom.MAX;
-    return;
   }
 
   scaleControlValue.value = `${size}%`;
