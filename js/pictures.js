@@ -1,7 +1,6 @@
 import { showBigPicture } from './big-picture.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const pictures = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
 const renderPhoto = (picture) => {
@@ -24,6 +23,8 @@ const renderPhoto = (picture) => {
 };
 
 const renderPhotos = (photos) => {
+  const pictures = document.querySelector('.pictures');
+
   photos.forEach((photo) => {
     renderPhoto(photo);
   });
