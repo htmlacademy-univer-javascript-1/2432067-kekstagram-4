@@ -1,8 +1,9 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const uploadFile = document.querySelector('#upload-file');
-const preview = document.querySelector('.img-upload__preview img');
-const effectsList = document.querySelector('.effects__list');
+const formUpload = document.querySelector('.img-upload__form');
+const uploadFile = formUpload.querySelector('#upload-file');
+const preview = formUpload.querySelector('.img-upload__preview img');
+const effectsList = formUpload.querySelector('.effects__list');
 const smallImages = effectsList.querySelectorAll('span');
 
 const onUploadImageChange = () => {
