@@ -10,7 +10,6 @@ const MAX_BRIGHTNESS = 3;
 const Slider = {
   MIN: 10,
   MAX: 100,
-  STEP: 10,
 };
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -117,7 +116,7 @@ noUiSlider.create(sliderElement, {
   },
 
   start: Slider.MAX,
-  step: Slider.STEP,
+  step: Slider.MIN,
   connect: 'lower',
 });
 
