@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { initRadios, resetFilters } from './effects.js';
-import { pristine } from './hashtag-pristine.js';
+import { pristine } from './hashtags-pristine.js';
 
 const Zoom = {
   MIN: 25,
