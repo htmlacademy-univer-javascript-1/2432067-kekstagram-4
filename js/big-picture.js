@@ -111,4 +111,4 @@ const showBigPicture = (picture) => {
   pictureCloseButton.addEventListener('click', onCloseBigPictureClick);
 };
 
-export {showBigPicture};
+export { showBigPicture };

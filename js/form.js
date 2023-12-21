@@ -1,22 +1,23 @@
 import { isEscapeKey } from './util.js';
 import { initRadios, resetFilters } from './effects.js';
+import { pristine } from './hashtag-pristine.js';
 
 const Zoom = {
   MIN: 25,
   MAX: 100,
-  STEP: 25,
 };
 
 const body = document.body;
 const formUpload = body.querySelector('.img-upload__form');
-const overlay = body.querySelector('.img-upload__overlay');
-const imagePreview = body.querySelector('.img-upload__preview img');
-const fileUpload = body.querySelector('#upload-file');
-const formUploadClose = body.querySelector('#upload-cancel');
-const minusButton = body.querySelector('.scale__control--smaller');
-const plusButton = body.querySelector('.scale__control--bigger');
-const scaleControlValue = body.querySelector('.scale__control--value');
-const mainPicture = document.querySelector('.img-upload__preview img');
+const overlay = formUpload.querySelector('.img-upload__overlay');
+const imagePreview = formUpload.querySelector('.img-upload__preview img');
+const fileUpload = formUpload.querySelector('#upload-file');
+const formUploadClose = formUpload.querySelector('#upload-cancel');
+const minusButton = formUpload.querySelector('.scale__control--smaller');
+const plusButton = formUpload.querySelector('.scale__control--bigger');
+const scaleControlValue = formUpload.querySelector('.scale__control--value');
+const mainPicture = formUpload.querySelector('.img-upload__preview img');
+const imgUploadSubmitButton = formUpload.querySelector('.img-upload__submit');
 
 const closeForm = () => {
   overlay.classList.add('hidden');
@@ -27,6 +28,13 @@ const closeForm = () => {
 
   formUpload.reset();
   resetFilters();
+
+  imgUploadSubmitButton.disabled = false;
+
+  pristine.reset();
+
+  scaleControlValue.value = '100%';
+  imagePreview.style.transform = 'scale(1)';
 };
 
 function onCloseFormClick (evt) {
@@ -37,7 +45,8 @@ function onCloseFormClick (evt) {
 function onCloseFormEscKeyDown (evt) {
   if (isEscapeKey(evt) &&
     !evt.target.classList.contains('text__hashtags') &&
-    !evt.target.classList.contains('text__description'))
+    !evt.target.classList.contains('text__description') &&
+    !body.querySelector('.error'))
   {
     evt.preventDefault();
     closeForm();
@@ -71,7 +80,7 @@ formUploadClose.addEventListener('click', () => {
 });
 
 const changeZoom = (factor = 1) => {
-  let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
+  let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
