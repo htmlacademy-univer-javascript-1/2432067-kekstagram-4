@@ -7,7 +7,6 @@ import { onSuccess, onError } from './messages.js';
 const Zoom = {
   MIN: 25,
   MAX: 100,
-  STEP: 25,
 };
 
 const body = document.body;
@@ -37,7 +36,7 @@ const openForm = () => {
 };
 
 const changeZoom = (factor = 1) => {
-  let size = parseInt(scaleControlValue.value, 10) + (Zoom.STEP * factor);
+  let size = parseInt(scaleControlValue.value, 10) + (Zoom.MIN * factor);
 
   if (size < Zoom.MIN) {
     size = Zoom.MIN;
