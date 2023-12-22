@@ -17,13 +17,13 @@ const sliderElement = uploadForm.querySelector('.effect-level__slider');
 const sliderUpload = uploadForm.querySelector('.img-upload__effect-level');
 const currentSlider = uploadForm.querySelector('.effect-level__value');
 const filterRadios = uploadForm.querySelectorAll('.effects__item');
-const imagePreview = uploadForm.querySelector('.img-upload__preview img');
+const mainPicture = uploadForm.querySelector('.img-upload__preview img');
 
 let currentEffect = document.querySelector('.effects__radio').value;
 
 currentSlider.value = DEFAULT_EFFECT_LEVEL;
 
-const effects = {
+const Effects = {
   none: 0,
   chrome: {
     filter: 'grayscale',
@@ -54,16 +54,16 @@ const effects = {
 
 const applySliderValue = () => {
   if (currentEffect !== 'none') {
-    const effect = effects[currentEffect];
-    imagePreview.style.filter = `${effect.filter}(${sliderElement.noUiSlider.get()}${effect.measurementUnit})`;
+    const effect = Effects[currentEffect];
+    mainPicture.style.filter = `${effect.filter}(${sliderElement.noUiSlider.get()}${effect.measurementUnit})`;
     currentSlider.value = `${parseFloat(sliderElement.noUiSlider.get())}${effect.measurementUnit}`;
   } else {
-    imagePreview.style.filter = '';
+    mainPicture.style.filter = '';
   }
 };
 
 const changeSlider = (newEffect) => {
-  const effect = effects[newEffect];
+  const effect = Effects[newEffect];
   if(effect !== 0){
     sliderElement.noUiSlider.updateOptions({
       range: {
@@ -78,7 +78,7 @@ const changeSlider = (newEffect) => {
   }
   else{
     sliderUpload.classList.add('visually-hidden');
-    imagePreview.style.filter = '';
+    mainPicture.style.filter = '';
   }
 };
 
@@ -96,7 +96,7 @@ const resetFilters = () =>{
     filter.removeEventListener('change', onRadioChange);
   });
 
-  imagePreview.style.filter = 'none';
+  mainPicture.style.filter = 'none';
   sliderElement.noUiSlider.off('change', onNoUiSliderChange);
 };
 
@@ -106,7 +106,7 @@ const initRadios = () =>{
   filterRadios.forEach((filter) => {
     filter.addEventListener('change', onRadioChange);
   });
-  imagePreview.style.filter = 'none';
+  mainPicture.style.filter = 'none';
 };
 
 noUiSlider.create(sliderElement, {
