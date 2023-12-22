@@ -86,7 +86,6 @@ const onBigPictureEscKeyDown = (evt) => {
 const onCloseBigPictureClick = () => {
   closeBigPicture();
 
-  document.removeEventListener('keydown', onBigPictureEscKeyDown);
   pictureCloseButton.removeEventListener('click', onCloseBigPictureClick);
 };
 
@@ -111,4 +110,4 @@ const showBigPicture = (picture) => {
   pictureCloseButton.addEventListener('click', onCloseBigPictureClick);
 };
 
-export {showBigPicture};
+export { showBigPicture };
