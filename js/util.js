@@ -40,8 +40,9 @@ const showAlert = () => {
   messageAlert.style.left = 0;
   messageAlert.style.top = 0;
   messageAlert.style.right = 0;
-  messageAlert.style.fontSize = '30px';
-  messageAlert.style.backgroundColor = 'red';
+  messageAlert.style.fontSize = '20px';
+  messageAlert.style.backgroundColor = '#e1375f';
+  messageAlert.style.padding = '15px';
   messageAlert.style.textAlign = 'center';
   messageAlert.textContent = 'Ошибка загрузки фотографий';
   document.body.append(messageAlert);
