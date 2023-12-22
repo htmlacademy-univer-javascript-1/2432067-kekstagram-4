@@ -34,5 +34,19 @@ const closeOnEscKeyDown = (evt, cb) => {
   }
 };
 
+const showAlert = () => {
+  const messageAlert = document.createElement('div');
+  messageAlert.style.position = 'absolute';
+  messageAlert.style.left = 0;
+  messageAlert.style.top = 0;
+  messageAlert.style.right = 0;
+  messageAlert.style.fontSize = '20px';
+  messageAlert.style.backgroundColor = '#e1375f';
+  messageAlert.style.padding = '15px';
+  messageAlert.style.textAlign = 'center';
+  messageAlert.textContent = 'Ошибка загрузки фотографий';
+  document.body.append(messageAlert);
+};
 
-export { closeOnEscKeyDown, debounce, shuffleArray, isEscapeKey };
+
+export { closeOnEscKeyDown, debounce, shuffleArray, isEscapeKey, showAlert };
