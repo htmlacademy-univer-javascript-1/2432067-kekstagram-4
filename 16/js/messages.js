@@ -1,58 +1,49 @@
 import { closeForm } from './form.js';
 import { isEscapeKey } from './util.js';
-import { uploadData } from './fetch.js';
 
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const body = document.body;
+const errorMessage = body.querySelector('#error').content.querySelector('.error');
 const successMessage = document.querySelector('#success').content.querySelector('.messages');
-const formUpload = document.querySelector('.img-upload__form');
 
-const closePopup = () => {
-  const popup = document.querySelector('.error') || document.querySelector('.success');
-  popup.remove();
+const onPopupClick = (evt) => {
+  if (evt.target.classList.contains('success__inner') || evt.target.classList.contains('error__inner')) {
+    return;
+  }
+
+  closePopup();
 };
 
 const onEscKeyDown = (evt) => {
+  evt.preventDefault();
   if (isEscapeKey(evt)) {
     closePopup();
   }
 };
 
-const onPopupClick = (evt) => {
-  if (!evt.target.classList.contains('success__inner') && !evt.target.classList.contains('error__inner')) {
-    evt.preventDefault();
-    closePopup();
-    document.removeEventListener('keydown', onEscKeyDown);
-  }
-};
+function closePopup () {
+  body.removeEventListener('click', onPopupClick);
+  document.removeEventListener('keydown', onEscKeyDown);
+  body.removeChild(body.lastChild);
+}
 
-const showMessage = (message) => {
-  message.addEventListener('click', onPopupClick);
-  document.body.appendChild(message);
-  document.addEventListener('keydown', onEscKeyDown, {once: true});
-};
+const showMessage = (messageTemplate) => {
+  const message = messageTemplate.cloneNode(true);
+  message.style.zIndex = 100;
 
-const showErrorMessage = () => {
-  const messageFragment = errorMessage.cloneNode(true);
-  showMessage(messageFragment);
-};
+  document.addEventListener('keydown', onEscKeyDown);
+  body.addEventListener('click', onPopupClick);
 
-const showSuccessMessage = () => {
-  const messageFragment = successMessage.cloneNode(true);
-  showMessage(messageFragment);
+
+  body.appendChild(message);
 };
 
 const onSuccess = () => {
   closeForm();
-  showSuccessMessage();
+  showMessage(successMessage);
 };
 
 const onError = () => {
-  showErrorMessage();
+  showMessage(errorMessage);
 };
 
-const onFormUploadSubmit = (evt) => {
-  evt.preventDefault();
-  uploadData(onSuccess, onError, 'POST', new FormData(evt.target));
-};
-
-formUpload.addEventListener('submit', onFormUploadSubmit);
+export{ onSuccess, onError };
