@@ -3,10 +3,11 @@ import { isEscapeKey } from './util.js';
 
 const body = document.body;
 const errorMessage = body.querySelector('#error').content.querySelector('.error');
-const successMessage = document.querySelector('#success').content.querySelector('.messages');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
 
 const onPopupClick = (evt) => {
-  if (evt.target.classList.contains('success__inner') || evt.target.classList.contains('error__inner')) {
+  const clickElem = evt.target;
+  if (clickElem.classList.contains('success__inner') || clickElem.classList.contains('error__inner')) {
     return;
   }
 
@@ -27,7 +28,7 @@ function closePopup () {
 }
 
 const showMessage = (messageTemplate) => {
-  const message = messageTemplate.cloneNode(true);
+  const message = messageTemplate.cloneNode(1);
   message.style.zIndex = 100;
 
   document.addEventListener('keydown', onEscKeyDown);
