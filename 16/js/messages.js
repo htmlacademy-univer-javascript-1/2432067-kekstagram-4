@@ -2,8 +2,8 @@ import { closeForm } from './form.js';
 import { isEscapeKey } from './util.js';
 
 const body = document.body;
-const errorMessage = body.querySelector('#error').content.querySelector('.error');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = body.querySelector('#error').content.querySelector('section');
+const successMessage = document.querySelector('#success').content.querySelector('section');
 
 const onPopupClick = (evt) => {
   const clickElem = evt.target;
