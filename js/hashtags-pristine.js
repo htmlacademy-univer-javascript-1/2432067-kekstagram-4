@@ -17,7 +17,7 @@ const inputHashtag = document.querySelector('.text__hashtags');
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const getError = () => errorMessage;
 
 const hashtagsHandler = (value) => {
   errorMessage = '';
@@ -70,7 +70,7 @@ const hashtagsHandler = (value) => {
   });
 };
 
-pristine.addValidator(inputHashtag, hashtagsHandler, error, 2, false);
+pristine.addValidator(inputHashtag, hashtagsHandler, getError, 2, false);
 
 const validateInput = () => {
   if (pristine.validate()) {
